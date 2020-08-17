@@ -54,8 +54,12 @@ data:
     yaml-out-key"
 
 ---
-### kubectl create secret generic k8-secret --from-file=./my-secrets/
 
+### converted yamls to properties in key value format as --from-env-file needs KV paired file
+### only single file is accepted using --from-env-file
+### merged generic(outbound) and specific(-nssit1) KV files, -specific keys overwriting generic keys
+### Finally used the merged file to create secret(or sealed secret)
+### kubectl create secret generic k8-secret --from-env-file=./my-secrets/merged.yaml
 kind: Secret
 apiVersion: v1
 metadata:
@@ -103,10 +107,15 @@ spec:
             - name: smnt
               mountPath: /mysecrets
               readOnly: true
+            - name: cmnt
+              mountPath: /myconfigs
       volumes:
         - name: smnt
           secret:
             secretName: k8-secret
+        - name: cmnt
+          configMap:
+          name: k8-config
 ---
 ### kubectl expose deployment k8-dep --type=NodePort --name=k8-svc
 ### kubectl get service k8-svc -o yaml
