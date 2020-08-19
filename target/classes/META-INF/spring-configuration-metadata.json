@@ -8,16 +8,6 @@
   ],
   "properties": [
     {
-      "name": "allkeys",
-      "type": "java.lang.String",
-      "sourceType": "com.aaronbcj.k8s.ConfigKeys"
-    },
-    {
-      "name": "secret",
-      "type": "java.lang.String",
-      "sourceType": "com.aaronbcj.k8s.ConfigKeys"
-    },
-    {
       "name": "secret1",
       "type": "java.lang.String",
       "sourceType": "com.aaronbcj.k8s.ConfigKeys"

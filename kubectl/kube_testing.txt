@@ -23,35 +23,38 @@ in CMD> @FOR /f "tokens=*" %i IN ('minikube -p minikube docker-env') DO @%i
 minikube start --vm-driver=hyperv --v=7 --alsologtostderr
 /*******************************************************/
 
-mvn clean install
+mvn clean package
 
 docker build -t aaronbcj/k8s-sec-img:1.0 .
 docker push aaronbcj/k8s-sec-img:1.0
 
-
-/***** create from files ******/
-kubectl create configmap k8-config --from-literal=hello="Hello literal" --from-file=./my-configs/
-kubectl create secret generic k8-secret --from-file=./my-secrets/
-kubectl get configmaps k8-config -o yaml
-kubectl get secret k8-secret -o yaml
-/****************************************/
-
-kubectl apply -f configmap.yaml
-kubectl apply -f deployment.yaml
-kubectl apply -f service.yaml
+kubectl apply -f ./kubectl/deployment_v1.yaml
+kubectl get pods
 
 /* to explore pod filessytem*/
-kubectl get pods
 kubectl exec --stdin --tty k8-dep-685dc8f687-hv5x6 -- /bin/sh
 >exit
 kubectl logs k8-dep-685dc8f687-hv5x6
 /* to explore pod filessytem*/
 
 >>>>>>>launch minikube url
+kubectl port-forward k8-dep-685dc8f687-hv5x6 8081:8080
+http://localhost:8000/keys
+
+
+/***** create from files ******/
+# kubectl create configmap k8-config --from-literal=hello="Hello literal" --from-file=./my-configs/
+# kubectl create secret generic k8-secret --from-file=./my-secrets/
+# kubectl get configmaps k8-config -o yaml
+# kubectl get secret k8-secret -o yaml
+
+# kubectl apply -f configmap.yaml
+# kubectl apply -f deployment.yaml
+# kubectl apply -f service.yaml
+/****************************************/
+
 kubectl get services
 minikube service k8-svc --url
-kubectl port-forward k8-dep-7bdb7ff466-bdjtd 9000:8080
-http://localhost:9000/keys
 
 #################################################
 #####debugging / testing containers commands#####

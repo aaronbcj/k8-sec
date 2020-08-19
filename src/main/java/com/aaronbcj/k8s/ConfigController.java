@@ -35,12 +35,12 @@ public class ConfigController  {
 	
 	private String getConfig()
 	{
-		String sysGetEnv = System.getenv().getOrDefault("secret1", "user");
+		String sysGetEnv = System.getenv().getOrDefault("secret1.location", "user");
 		//String accessToken = System.getenv().getOrDefault("SECRETS_CRED_USER_ACCESS_TOKEN", "token");
 		//String profile = System.getenv().getOrDefault("spring.profiles.active", "not-set");
 		
-		String response = String.format("secret1=%s, secret2=%s, secret3=%s, secret=%s, allkeys=%s, sys.getenv=%s, env.getsecret=%s, env.getallkeys=%s", 
-				keys.getSecret1(), keys.getSecret2(), keys.getSecret3(),keys.getSecret(),keys.getAllkeys(),sysGetEnv, env.getProperty("secret"),env.getProperty("allkeys"));
+		String response = String.format("secret1.location=%s, secret2.location=%s, secret3.location=%s, sys.getenv(secret1.location)=%s, env.getprop(outbound)=%s, env.getprop(outbound-nsdev)=%s", 
+				keys.getSecret1(), keys.getSecret2(), keys.getSecret3(),sysGetEnv, env.getProperty("outbound.yml"),env.getProperty("outbound-nsdev.yml"));
 		
 		System.out.println(response);
 		return response;

@@ -16,20 +16,14 @@ import org.springframework.core.env.Environment;
 @RefreshScope
 public class ConfigKeys {
 
-	@Value("${secret1:empty}")
+	@Value("${secret1.location:empty}")
 	private String secret1;
 	
-	@Value("${secret2:empty}")
+	@Value("${secret2.location:empty}")
 	private String secret2;
 	
-	@Value("${secret3:empty}")
+	@Value("${secret3.location:empty}")
 	private String secret3;
-	
-	@Value("${secret:empty}")
-	private String secret;
-	
-	@Value("${allkeys:empty}")
-	private String allkeys;
 	
 	public String getSecret1() {
 		return secret1;
@@ -53,22 +47,6 @@ public class ConfigKeys {
 
 	public void setSecret3(String secret3) {
 		this.secret3 = secret3;
-	}
-	
-	public String getSecret() {
-		return secret;
-	}
-
-	public void setSecret(String secret) {
-		this.secret = secret;
-	}
-	
-	public String getAllkeys() {
-		return allkeys;
-	}
-
-	public void setAllkeys(String allkeys) {
-		this.allkeys = allkeys;
 	}
 	
 }
